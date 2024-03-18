@@ -5,7 +5,7 @@ export function fakeFetchCryptoData() {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(cryptoData)
-    }, 2)
+    }, 2000)
   })
 }
 
@@ -13,6 +13,6 @@ export function fetchCryptoAssets() {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(cryptoAssets)
-    }, 2)
+    }, 2000)
   })
 }
