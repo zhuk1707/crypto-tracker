@@ -1,7 +1,7 @@
 import {Button, Drawer, Layout, Modal} from "antd";
 import {Select, Space} from 'antd';
 import {useCrypto} from "../../context/crypto-context.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {TokenInfo} from "../TokenInfo.jsx";
 import {AddAssetForm} from "../AddAssetForm.jsx";
 
@@ -29,12 +29,22 @@ export default function AppHeader() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [token, setToken] = useState();
 
+  const selectRef = useRef(null);
+
+  const setFocusOnSelect = () => selectRef.current.focus();
+  const setBlurOnSelect = () => selectRef.current.blur();
+
   useEffect(() => {
     const keypress = (event) => {
       if (event.key === `/`) {
-        setSelect((prevState) => !prevState)
+        setSelect((prevState) => {
+          (prevState)? setBlurOnSelect() : setFocusOnSelect()
+          return !prevState
+        })
       }
     };
+
+
 
     document.addEventListener("keypress", keypress)
     return () => {
@@ -56,8 +66,12 @@ export default function AppHeader() {
   return (
     <Layout.Header style={headerStyle}>
       <Select
+        ref={selectRef}
         onSelect={handleSelect}
-        onClick={() => setSelect((prevState) => !prevState)}
+        onClick={() => setSelect((prevState) => {
+          (prevState)? setBlurOnSelect() : setFocusOnSelect()
+          return !prevState
+        })}
         open={select}
         style={{width: 'calc(25% - 24px)',}}
         placeholder="select a token"
@@ -99,9 +113,7 @@ export default function AppHeader() {
         }}
         open={isDrawerOpen}
       >
-        <AddAssetForm>
-
-        </AddAssetForm>
+        <AddAssetForm/>
       </Drawer>
     </Layout.Header>
   )

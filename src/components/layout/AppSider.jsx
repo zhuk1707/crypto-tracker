@@ -44,7 +44,7 @@ export default function AppSider() {
                 <span>{item.title}</span>
                 <span>
                   {item.withTag &&
-                    <Tag color={asset.grow ? 'green' : 'red'}>
+                    <Tag color={asset.grow ? 'success' : 'error'}>
                       {asset.growPercent}%
                     </Tag>
                   }
@@ -52,7 +52,7 @@ export default function AppSider() {
                   {item.isPlain && item.value}
 
                   {!item.isPlain &&
-                    <Typography.Text type={asset.grow ? 'success' : 'danger'}>
+                    <Typography.Text type={asset.grow ? 'success' : 'error'}>
                       {item.value.toFixed(2)}$
                     </Typography.Text>
                   }
