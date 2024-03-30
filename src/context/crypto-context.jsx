@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {fakeFetchCryptoData, fetchCryptoAssets} from "../api.js";
-import {getPercentDifference} from "../utils.js";
+import {capitalize, getPercentDifference} from "../utils.js";
 
 const CryptoContext = createContext({
   assets:[],
@@ -17,10 +17,12 @@ export function CryptoContextProvider({children}) {
     return assets.map(asset => {
       const token = result.find(t => t.id === asset.id)
       return {
+        symbol: token.symbol,
         grow: asset.price < token.price,
         growPercent: getPercentDifference(token.price, asset.price),
         totalAmount: asset.amount * token.price,
         totalProfit: asset.amount * token.price - asset.amount * asset.price,
+        name: capitalize(token.name),
         ...asset
       }
     })

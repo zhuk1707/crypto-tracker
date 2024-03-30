@@ -25,7 +25,7 @@ export default function AppSider() {
           style={cardStyle}
         >
           <Statistic
-            title={capitalize(asset.id)}
+            title={`${capitalize(asset.id)} ${asset.symbol}`}
             value={asset.totalAmount.toFixed(2)}
             valueStyle={{
               color: asset.grow ? '#52c41a' : '#ff4d4f',
