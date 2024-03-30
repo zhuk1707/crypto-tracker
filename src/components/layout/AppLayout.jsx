@@ -14,8 +14,8 @@ export default function AppLayout() {
     <Layout>
       <AppHeader/>
       <Layout>
-        <AppSider/>
         <AppContent/>
+        <AppSider/>
       </Layout>
     </Layout>
   )

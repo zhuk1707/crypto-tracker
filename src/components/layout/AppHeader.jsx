@@ -1,9 +1,9 @@
-import {Button, Drawer, Layout, Modal} from "antd";
-import {Select, Space} from 'antd';
+import {Button, Drawer, Layout, Modal, Select, Space} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
 import {useEffect, useRef, useState} from "react";
-import {TokenInfo} from "../TokenInfo.jsx";
+import {TokenInfoModal} from "../TokenInfoModal.jsx";
 import {AddAssetForm} from "../AddAssetForm.jsx";
+import {PlusOutlined} from "@ant-design/icons";
 
 const headerStyle = {
   height: 60,
@@ -38,12 +38,11 @@ export default function AppHeader() {
     const keypress = (event) => {
       if (event.key === `/`) {
         setSelect((prevState) => {
-          (prevState)? setBlurOnSelect() : setFocusOnSelect()
+          (prevState) ? setBlurOnSelect() : setFocusOnSelect()
           return !prevState
         })
       }
     };
-
 
 
     document.addEventListener("keypress", keypress)
@@ -69,12 +68,12 @@ export default function AppHeader() {
         ref={selectRef}
         onSelect={handleSelect}
         onClick={() => setSelect((prevState) => {
-          (prevState)? setBlurOnSelect() : setFocusOnSelect()
+          (prevState) ? setBlurOnSelect() : setFocusOnSelect()
           return !prevState
         })}
         open={select}
         style={{width: 'calc(25% - 24px)',}}
-        placeholder="select a token"
+        placeholder="Select a token"
         options={crypto.map((token) => ({
           label: token.name,
           value: token.id,
@@ -89,12 +88,13 @@ export default function AppHeader() {
       />
 
       <Button
-        type="default"
+        type="primary"
+        ghost
         onClick={() => {
           setIsDrawerOpen(true)
         }}
       >
-        Add Asset
+        <PlusOutlined />Add Asset
       </Button>
 
       <Modal
@@ -102,18 +102,19 @@ export default function AppHeader() {
         open={isModalOpen}
         onCancel={handleCancel}
       >
-        <TokenInfo token={token}/>
+        <TokenInfoModal token={token}/>
       </Modal>
 
       <Drawer
         title="Add Asset"
-        width='50%'
+        width='45%'
         onClose={() => {
           setIsDrawerOpen(false)
         }}
         open={isDrawerOpen}
+        destroyOnClose
       >
-        <AddAssetForm/>
+        <AddAssetForm closeDrawer={() => setIsDrawerOpen(false)}/>
       </Drawer>
     </Layout.Header>
   )
