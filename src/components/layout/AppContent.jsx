@@ -1,7 +1,8 @@
-import {Card, Layout, Typography} from "antd";
+import {Card, Col, Divider, Flex, Layout, Row, Typography} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
 import PortfolioChart from "./../PortfolioChart.jsx"
 import AssetsTable from "./../AssetsTable.jsx"
+import PortfolioPolarArea from "../PortfolioPolarArea.jsx";
 
 const contentStyle = {
   textAlign: 'center',
@@ -9,6 +10,7 @@ const contentStyle = {
   backgroundColor: '#dadada',
   padding: '1rem'
 };
+
 
 export default function AppContent() {
   const {assets, crypto} = useCrypto()
@@ -20,8 +22,8 @@ export default function AppContent() {
 
   return (
     <Layout.Content style={contentStyle}>
-      <Card bordered={false} style={{marginBottom:'1em'}}>
-        <Typography.Title level={3} style={{textAlign: 'left', marginBottom:'0'}}>
+      <Card bordered={false} style={{marginBottom: '1em'}}>
+        <Typography.Title level={3} style={{textAlign: 'left', marginBottom: '0'}}>
           Portfolio: {assets
           .map(asset => asset.amount * cryptoPriceMap[asset.id])
           .reduce((previousValue, currentValue) => previousValue + currentValue, 0)
@@ -30,13 +32,24 @@ export default function AppContent() {
         </Typography.Title>
       </Card>
 
-      <Card bordered={false} style={{marginBottom:'1em'}}>
-        <PortfolioChart></PortfolioChart>
+      <Card style={{marginBottom: '1em'}}>
+        <Row>
+          <Col className="gutter-row" span={12}>
+            <PortfolioChart/>
+          </Col>
+          <Col className="gutter-row" span={12}>
+            <PortfolioPolarArea/>
+          </Col>
+        </Row>
+
       </Card>
 
-      <Card bordered={false} style={{marginBottom:'1em'}}>
-        <AssetsTable></AssetsTable>
+
+      <Card>
+        <AssetsTable/>
       </Card>
+
+
     </Layout.Content>
   )
 };

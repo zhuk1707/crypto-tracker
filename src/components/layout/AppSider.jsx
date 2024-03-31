@@ -38,6 +38,7 @@ export default function AppSider() {
             dataSource={[
               {title: 'Total Profit', value: asset.totalProfit, withTag: true},
               {title: 'Asset Amount', value: asset.amount, isPlain: true},
+              {title: 'A Coin bought for', value: asset.price, withUSDSymbol: true, isPlain: true},
             ]}
             renderItem={(item) => (
               <List.Item>
@@ -49,7 +50,10 @@ export default function AppSider() {
                     </Tag>
                   }
 
-                  {item.isPlain && item.value}
+                  {item.withUSDSymbol && item.isPlain && <span>{item.value}$</span>}
+
+
+                  {item.isPlain && !item.withUSDSymbol &&  item.value}
 
                   {!item.isPlain &&
                     <Typography.Text type={asset.grow ? 'success' : 'error'}>
